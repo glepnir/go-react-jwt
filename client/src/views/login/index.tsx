@@ -1,11 +1,11 @@
-import React from "react";
-import { Input, Button, message } from "antd";
-import { UserOutlined, LockOutlined } from "@ant-design/icons";
-import "./style.scss";
+import React from 'react';
+import { Input, Button, message } from 'antd';
+import { UserOutlined, LockOutlined } from '@ant-design/icons';
+import './style.scss';
 
 const Login: React.FC = () => {
   const handleSubmit = () => {
-    message.success("test");
+    message.success('test');
   };
   return (
     <div className="login-page">
