@@ -3,7 +3,6 @@ import { HashRouter, Route, Switch } from 'react-router-dom';
 import Login from '../views/login';
 import Home from '../views/home';
 
-
 const Routers: React.FC = () => (
   <HashRouter>
     <Switch>
