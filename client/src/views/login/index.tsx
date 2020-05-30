@@ -1,25 +1,35 @@
 import React, { useState, useEffect } from 'react';
 import { Form, Input, Button, Spin, message } from 'antd';
 import { UserOutlined, LockOutlined, LoadingOutlined } from '@ant-design/icons';
-import useInput from '../../hooks/useInput';
+import request from '../../utils/request';
 import './style.scss';
 
 const FormItem = Form.Item;
 
+interface LoginFormData {
+  username?: string;
+  password?: string;
+}
+
+interface LoginResponseData {
+  code: string;
+  token: string;
+  msg: string;
+}
+
 const Login: React.FC = () => {
-  const username = useInput('');
-  const password = useInput('');
   const [loading, setLoading] = useState(false);
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
-  const handleSubmit = () => {
-    const loginame = username.val.trim();
-    const loginpassword = password.val.trim();
+  const handleSubmit = async (values: LoginFormData) => {
     try {
       setLoading(true);
-      if (loginame) throw new Error('The Username cannot empty');
-      if (loginpassword) throw new Error('The PassWord cannot empty');
-      message.success('test');
+      const data = (await request(
+        '/api/login',
+        values,
+        'POST'
+      )) as LoginResponseData;
+      message.success(data.msg);
       setLoading(false);
     } catch (err) {
       message.error(err.message);
@@ -30,15 +40,10 @@ const Login: React.FC = () => {
 
   return (
     <div className="login-page">
-      <Form
-        name="login"
-        className="login-form"
-        initialValues={{ remember: true }}
-      >
+      <Form name="login" className="login-form" onFinish={handleSubmit}>
         <p className="login-title"> Go React</p>
         <FormItem
           name="username"
-          validateStatus="error"
           rules={[{ required: true, message: 'Please input your Username!' }]}
         >
           <Input
@@ -59,12 +64,7 @@ const Login: React.FC = () => {
         </FormItem>
 
         <FormItem>
-          <Button
-            htmlType="submit"
-            onClick={handleSubmit}
-            type="primary"
-            className="login-button"
-          >
+          <Button htmlType="submit" type="primary" className="login-button">
             <Spin indicator={antIcon} spinning={loading} />
             {loading ? ' Logging in' : ' Login'}
           </Button>

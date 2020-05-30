@@ -4,9 +4,6 @@ import { message } from 'antd';
 const instance: AxiosInstance = axios.create({
   timeout: 5000,
   baseURL: 'http://localhost:8080',
-  headers: {
-    'Content-Type': 'application/json;charset=utf-8',
-  },
 });
 
 export default function request(url: string, data: object, type = 'GET') {
@@ -18,7 +15,7 @@ export default function request(url: string, data: object, type = 'GET') {
         method: type,
       });
     } else {
-      promise = axios.post(url, data);
+      promise = instance.post(url, data);
     }
     promise
       .then((response) => {
