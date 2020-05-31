@@ -2,6 +2,7 @@
 package main
 
 import (
+	"context"
 	"crypto/rsa"
 	"encoding/json"
 	"errors"
@@ -9,6 +10,9 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"os"
+	"os/signal"
+	"syscall"
 	"time"
 
 	jwt "github.com/dgrijalva/jwt-go"
@@ -38,10 +42,28 @@ var (
 )
 
 func main() {
-	http.Handle("/api/login", appHandler(LoginHandler))
+	mux := http.NewServeMux()
+	mux.Handle("/api/login", appHandler(LoginHandler))
+	srv := &http.Server{
+		Addr:    ":8080",
+		Handler: mux,
+	}
 	go func() {
-		fatal(http.ListenAndServe(":8080", nil))
+		if err := srv.ListenAndServe(); err != nil && err != http.ErrServerClosed {
+			log.Fatalf("Listen:%s\n", err)
+		}
 	}()
+	log.Println("Server started")
+	quit := make(chan os.Signal, 1)
+	signal.Notify(quit, syscall.SIGINT, syscall.SIGTERM)
+	<-quit
+	log.Println("Recived shutdown signal,Server will closed")
+	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
+	defer cancel()
+	if err := srv.Shutdown(ctx); err != nil {
+		log.Fatalf("Server shutdown error:%s", err)
+	}
+	log.Println("Server exiting")
 }
 
 func init() {
