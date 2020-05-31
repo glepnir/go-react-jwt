@@ -60,6 +60,7 @@ type appHandler func(w http.ResponseWriter, r *http.Request) error
 func (fn appHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
+	w.Header().Set("Content-Type", "application/json;charset=utf-8")
 	if err := fn(w, r); err != nil {
 		http.Error(w, err.Error(), 500)
 	}
@@ -73,7 +74,6 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) error {
 	err := json.NewDecoder(r.Body).Decode(&user)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
-		fmt.Fprintln(w, "Error in request body")
 		return err
 	}
 	if user.UserName != "admin" && user.PassWord != "123456" {
@@ -98,17 +98,12 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) error {
 		return err
 	}
 	response := ResponseData{"1", tokenstring, "Login Success"}
-	jsonResponse(response, w)
-	return nil
-}
-
-func jsonResponse(response interface{}, w http.ResponseWriter) {
 	json, err := json.Marshal(response)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
+		return err
 	}
 	w.WriteHeader(http.StatusOK)
-	w.Header().Set("Content-Type", "application/json;charset=utf-8")
 	w.Write(json)
+	return nil
 }
