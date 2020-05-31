@@ -25,7 +25,7 @@ type User struct {
 	PassWord string `json:"password"`
 }
 
-// Response data
+// ResponseData define the content on response body
 type ResponseData struct {
 	Code  string `json:"code"`
 	Token string `json:"token"`
