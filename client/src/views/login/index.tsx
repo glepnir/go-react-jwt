@@ -32,9 +32,14 @@ const Login: React.FC<Iprops> = (props: Iprops) => {
         values,
         'POST'
       )) as LoginResponseData;
-      message.success(data.msg);
-      setLoading(false);
-      props.history.push('/home');
+      if (data.code === '1') {
+        message.success(data.msg);
+        setLoading(false);
+        props.history.push('/home');
+      } else {
+        message.error(data.msg);
+        setLoading(false);
+      }
     } catch (err) {
       message.error(err.message);
     }

@@ -5,7 +5,6 @@ import (
 	"context"
 	"crypto/rsa"
 	"encoding/json"
-	"errors"
 	"fmt"
 	"io/ioutil"
 	"log"
@@ -109,9 +108,10 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) error {
 		w.WriteHeader(http.StatusInternalServerError)
 		return err
 	}
-	if user.UserName != "admin" && user.PassWord != "123456" {
-		w.WriteHeader(http.StatusForbidden)
-		return errors.New("Wrong username or password")
+	if user.UserName != "admin" || user.PassWord != "123456" {
+		response := ResponseData{"0", "", "Login Failed Wrong account or passWord"}
+		jsonResponse(response, w)
+		return nil
 	}
 	t := jwt.New(jwt.SigningMethodRS256)
 	t.Claims = jwt.MapClaims{
@@ -131,6 +131,11 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) error {
 		return err
 	}
 	response := ResponseData{"1", tokenstring, "Login Success"}
+	jsonResponse(response, w)
+	return nil
+}
+
+func jsonResponse(response interface{}, w http.ResponseWriter) error {
 	json, err := json.Marshal(response)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
