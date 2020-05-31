@@ -19,11 +19,13 @@ const (
 	pubKeyPath  = "keys/app.rsa.pub"
 )
 
+// User model struct
 type User struct {
 	UserName string `json:"username"`
 	PassWord string `json:"password"`
 }
 
+// Response data
 type ResponseData struct {
 	Code  string `json:"code"`
 	Token string `json:"token"`
@@ -66,6 +68,8 @@ func (fn appHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+// LoginHandler that handle the request
+// and verify the user account and password
 func LoginHandler(w http.ResponseWriter, r *http.Request) error {
 	if r.Method == "OPTIONS" {
 		return nil
