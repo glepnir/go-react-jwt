@@ -39,21 +39,28 @@ var (
 
 func main() {
 	http.Handle("/api/login", appHandler(LoginHandler))
-	log.Fatal(http.ListenAndServe(":8080", nil))
+	go func() {
+		fatal(http.ListenAndServe(":8080", nil))
+	}()
 }
 
 func init() {
 	verifyBytes, err := ioutil.ReadFile(pubKeyPath)
+	fatal(err)
+
 	verifyKey, err = jwt.ParseRSAPublicKeyFromPEM(verifyBytes)
-	if err != nil {
-		log.Fatal("Error parse private key")
-		return
-	}
+	fatal(err)
+
 	signBytes, err := ioutil.ReadFile(privKeyPath)
+	fatal(err)
+
 	signKey, err = jwt.ParseRSAPrivateKeyFromPEM(signBytes)
+	fatal(err)
+}
+
+func fatal(err error) {
 	if err != nil {
-		log.Fatal("Error reading public key")
-		return
+		log.Fatal(err)
 	}
 }
 
