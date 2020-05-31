@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Form, Input, Button, Spin, message } from 'antd';
 import { UserOutlined, LockOutlined, LoadingOutlined } from '@ant-design/icons';
+import { RouteComponentProps } from 'react-router-dom';
 import request from '../../utils/request';
 import './style.scss';
 
 const FormItem = Form.Item;
+
+interface Iprops extends RouteComponentProps {}
 
 interface LoginFormData {
   username?: string;
@@ -17,7 +20,7 @@ interface LoginResponseData {
   msg: string;
 }
 
-const Login: React.FC = () => {
+const Login: React.FC<Iprops> = (props: Iprops) => {
   const [loading, setLoading] = useState(false);
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
@@ -31,6 +34,7 @@ const Login: React.FC = () => {
       )) as LoginResponseData;
       message.success(data.msg);
       setLoading(false);
+      props.history.push('/home');
     } catch (err) {
       message.error(err.message);
     }
