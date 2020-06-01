@@ -13,6 +13,7 @@
     "@types/react-dom": "^16.9.0",
     "@types/react-redux": "^7.1.9",
     "@types/react-router-dom": "^5.1.5",
+    "@types/store": "^2.0.2",
     "antd": "^4.2.5",
     "axios": "^0.19.2",
     "node-sass": "^4.14.1",
@@ -22,6 +23,7 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1",
     "redux": "^4.0.5",
+    "store": "^2.0.12",
     "typescript": "~3.7.2"
   },
   "scripts": {
