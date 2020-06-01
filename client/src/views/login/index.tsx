@@ -58,6 +58,7 @@ const Login: React.FC<Iprops> = (props: Iprops) => {
           <Input
             prefix={<UserOutlined className="site-form-item-icon" />}
             placeholder="Username"
+            size="large"
           />
         </FormItem>
 
@@ -69,11 +70,17 @@ const Login: React.FC<Iprops> = (props: Iprops) => {
             prefix={<LockOutlined className="site-form-item-icon" />}
             type="password"
             placeholder="Password"
+            size="large"
           />
         </FormItem>
 
         <FormItem>
-          <Button htmlType="submit" type="primary" className="login-button">
+          <Button
+            htmlType="submit"
+            type="primary"
+            className="login-button"
+            size="large"
+          >
             <Spin indicator={antIcon} spinning={loading} />
             {loading ? ' Logging in' : ' Login'}
           </Button>
