@@ -4,7 +4,6 @@ import { UserOutlined, LockOutlined, LoadingOutlined } from '@ant-design/icons';
 import { RouteComponentProps } from 'react-router-dom';
 import request from '../../utils/request';
 import './style.scss';
-import { Rule } from 'antd/lib/form';
 
 const FormItem = Form.Item;
 
