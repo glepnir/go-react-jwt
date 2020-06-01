@@ -4,10 +4,9 @@ import { UserOutlined, LockOutlined, LoadingOutlined } from '@ant-design/icons';
 import { RouteComponentProps } from 'react-router-dom';
 import request from '../../utils/request';
 import './style.scss';
+import { Rule } from 'antd/lib/form';
 
 const FormItem = Form.Item;
-
-interface Iprops extends RouteComponentProps {}
 
 interface LoginFormData {
   username?: string;
@@ -20,7 +19,7 @@ interface LoginResponseData {
   msg: string;
 }
 
-const Login: React.FC<Iprops> = (props: Iprops) => {
+const Login: React.FC<RouteComponentProps> = (props: RouteComponentProps) => {
   const [loading, setLoading] = useState(false);
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
@@ -53,7 +52,11 @@ const Login: React.FC<Iprops> = (props: Iprops) => {
         <p className="login-title"> Go React</p>
         <FormItem
           name="username"
-          rules={[{ required: true, message: 'Please input your Username!' }]}
+          rules={[
+            { required: true, message: 'Please input your Username!' },
+            { min: 4, message: 'min length of username is 4' },
+            { max: 12, message: 'max length of username is 12' },
+          ]}
         >
           <Input
             prefix={<UserOutlined className="site-form-item-icon" />}
@@ -64,7 +67,11 @@ const Login: React.FC<Iprops> = (props: Iprops) => {
 
         <FormItem
           name="password"
-          rules={[{ required: true, message: 'Please input your Password!' }]}
+          rules={[
+            { required: true, message: 'Please input your Password!' },
+            { min: 4, message: 'min length of password is 4' },
+            { max: 12, message: 'max length of password is 12' },
+          ]}
         >
           <Input
             prefix={<LockOutlined className="site-form-item-icon" />}
