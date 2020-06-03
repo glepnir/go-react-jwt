@@ -30,12 +30,9 @@ type User struct {
 
 // ResponseData define the content on response body
 type ResponseData struct {
-	Code string `json:"code"`
-	Data struct {
-		Token string `json:"token"`
-		Name  string `json:"name"`
-	} `json:"data,omiempty"`
-	Msg string `json:"msg"`
+	Code  string `json:"code"`
+	Token string `json:"token"`
+	Msg   string `json:"msg"`
 }
 
 var (
@@ -106,22 +103,20 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) error {
 		return nil
 	}
 	var user User
-	var response ResponseData
 	err := json.NewDecoder(r.Body).Decode(&user)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		return err
 	}
 	if user.UserName != "admin" || user.PassWord != "123456" {
-		response.Code = "0"
-		response.Msg = "Login Failed Wrong account or passWord"
+		response := ResponseData{"0", "", "Login Failed Wrong account or passWord"}
 		jsonResponse(response, w)
 		return nil
 	}
 	t := jwt.New(jwt.SigningMethodRS256)
 	t.Claims = jwt.MapClaims{
 		"iss": "admin",
-		"CustomUserInfo": struct {
+		"userinfo": struct {
 			Name string
 			Role string
 		}{user.UserName, "Member"},
@@ -135,10 +130,7 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) error {
 		log.Printf("Token Singing error %v\n", err)
 		return err
 	}
-	response.Code = "1"
-	response.Data.Token = tokenstring
-	response.Data.Name = user.UserName
-	response.Msg = "Login Success"
+	response := ResponseData{"1", tokenstring, "Login Success"}
 	jsonResponse(response, w)
 	return nil
 }
