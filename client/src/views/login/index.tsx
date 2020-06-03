@@ -3,20 +3,11 @@ import { Form, Input, Button, Spin, message } from 'antd';
 import { UserOutlined, LockOutlined, LoadingOutlined } from '@ant-design/icons';
 import { RouteComponentProps } from 'react-router-dom';
 import request from '../../utils/request';
+import storageUtils from '../../utils/storage';
+import { LoginFormData, LoginResponseData } from '../../store/action';
 import './style.scss';
 
 const FormItem = Form.Item;
-
-interface LoginFormData {
-  username?: string;
-  password?: string;
-}
-
-interface LoginResponseData {
-  code: string;
-  token: string;
-  msg: string;
-}
 
 const Login: React.FC<RouteComponentProps> = (props: RouteComponentProps) => {
   const [loading, setLoading] = useState(false);
@@ -31,6 +22,7 @@ const Login: React.FC<RouteComponentProps> = (props: RouteComponentProps) => {
         'POST'
       )) as LoginResponseData;
       if (data.code === '1') {
+        storageUtils.saveToken(data.token);
         message.success(data.msg);
         setLoading(false);
         props.history.push('/home');

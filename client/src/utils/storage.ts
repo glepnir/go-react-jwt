@@ -3,15 +3,15 @@ import store from 'store';
 const USER_KEY = 'user_key';
 
 export default {
-  // Save User
-  saveUser(user: any) {
-    store.set(USER_KEY, user);
+  // Save JWToken
+  saveToken(token: string) {
+    store.set(USER_KEY, token);
   },
-  // Get User
-  getUser() {
+  // Get JWToken
+  getToken() {
     return store.get(USER_KEY) || {};
   },
-  // Remove User
+  // Remove JWToken
   removeUser() {
     store.remove(USER_KEY);
   },

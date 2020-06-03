@@ -1,12 +1,12 @@
 import { combineReducers } from 'redux';
-import storageUtils from '../utils/storage';
+import { RECEIVE_USER, RESET_USER, UserAction } from './action';
 
-const initUser = storageUtils.getUser();
+const initUser = {};
 
-function user(state = initUser, action) {
+function user(state = initUser, action: UserAction) {
   switch (action.type) {
     case RECEIVE_USER:
-      return action.user;
+      return {};
     case RESET_USER:
       return {};
     default:
