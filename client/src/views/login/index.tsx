@@ -1,41 +1,54 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Form, Input, Button, Spin, message } from 'antd';
 import { UserOutlined, LockOutlined, LoadingOutlined } from '@ant-design/icons';
 import { RouteComponentProps } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import request from '../../utils/request';
 import storageUtils from '../../utils/storage';
-import { LoginFormData, LoginResponseData } from '../../store/action';
 import './style.scss';
+import { receiveUser } from '../../store/action';
 
 const FormItem = Form.Item;
+
+interface LoginFormData {
+  username?: string;
+  password?: string;
+}
+
+interface LoginResponseData {
+  code: string;
+  token: string;
+  msg: string;
+}
 
 const Login: React.FC<RouteComponentProps> = (props: RouteComponentProps) => {
   const [loading, setLoading] = useState(false);
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
+  const dispatch = useDispatch();
 
   const handleSubmit = async (values: LoginFormData) => {
     try {
       setLoading(true);
-      const data = (await request(
+      const result = (await request(
         '/api/login',
         values,
         'POST'
       )) as LoginResponseData;
-      if (data.code === '1') {
-        storageUtils.saveToken(data.token);
-        message.success(data.msg);
+      if (result.code === '1') {
+        storageUtils.saveToken(result.token);
+        const user = storageUtils.getUser(result.token);
+        dispatch(receiveUser(user));
+        message.success(result.msg);
         setLoading(false);
         props.history.push('/home');
       } else {
-        message.error(data.msg);
+        message.error(result.msg);
         setLoading(false);
       }
     } catch (err) {
       message.error(err.message);
     }
   };
-
-  useEffect(() => {}, []);
 
   return (
     <div className="login-page">
