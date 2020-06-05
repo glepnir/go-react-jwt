@@ -15,7 +15,7 @@ interface LogOut {
 
 export type UserAction = ReceiveUser | LogOut;
 
-export const receiveUser = (user: UserState) => ({
+export const receiveUser = (user: UserState): UserAction => ({
   type: RECEIVE_USER,
   payload: user,
 });

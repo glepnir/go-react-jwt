@@ -20,7 +20,7 @@ export default {
   },
   // Get JWToken
   getToken() {
-    return store.get(USER_KEY) || {};
+    return store.get(USER_KEY) || undefined;
   },
   // Remove JWToken
   removeToken() {
