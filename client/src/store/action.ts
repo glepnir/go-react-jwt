@@ -24,4 +24,3 @@ export const logout = () => {
   storageUtils.removeToken();
   return { type: RESET_USER };
 };
-

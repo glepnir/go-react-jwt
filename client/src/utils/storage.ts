@@ -8,8 +8,8 @@ interface TokenDecode {
   iss: string;
   exp: string;
   userinfo: {
-    name: string;
-    role: string;
+    Name: string;
+    Role: string;
   };
 }
 
@@ -30,8 +30,8 @@ export default {
   getUser(token: string): UserState {
     const decoded = JwtDecode<TokenDecode>(token);
     return {
-      name: decoded.userinfo.name,
-      role: decoded.userinfo.role,
+      name: decoded.userinfo.Name,
+      role: decoded.userinfo.Role,
     };
   },
 };
