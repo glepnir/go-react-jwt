@@ -1,20 +1,20 @@
 import { combineReducers } from 'redux';
-import { RECEIVE_USER, RESET_USER, UserAction } from './action';
+import { RECEIVE_USER, UserAction } from './action';
 import { UserState } from '../types/global';
 
 const initialUser: UserState = { name: '', role: '' };
 
-function user(state = initialUser, action: UserAction) {
+function user(state = initialUser, action: UserAction): UserState {
   switch (action.type) {
     case RECEIVE_USER:
-      return action.payload;
-    case RESET_USER:
-      return {};
+      return { ...state, ...action.payload };
     default:
       return state;
   }
 }
 
-export default combineReducers({
+export const rootReducer = combineReducers({
   user,
 });
+
+export type RootState = ReturnType<typeof rootReducer>;
