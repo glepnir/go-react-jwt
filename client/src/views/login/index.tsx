@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Form, Input, Button, Spin, message } from 'antd';
 import { UserOutlined, LockOutlined, LoadingOutlined } from '@ant-design/icons';
-import { RouteComponentProps } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import request from '../../utils/request';
 import storageUtils from '../../utils/storage';
@@ -21,10 +21,11 @@ interface LoginResponseData {
   msg: string;
 }
 
-const Login: React.FC<RouteComponentProps> = (props: RouteComponentProps) => {
+const Login: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const handleSubmit = async (values: LoginFormData) => {
     try {
@@ -40,7 +41,7 @@ const Login: React.FC<RouteComponentProps> = (props: RouteComponentProps) => {
         dispatch(receiveUser(user));
         message.success(result.msg);
         setLoading(false);
-        props.history.push('/home');
+        history.push('/home');
       } else {
         message.error(result.msg);
         setLoading(false);
