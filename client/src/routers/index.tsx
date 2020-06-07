@@ -1,17 +1,16 @@
 import React, { Suspense } from 'react';
 import { HashRouter, Route, Switch } from 'react-router-dom';
-import Home from '../views/home';
 import Loading from '../components/Loading';
+import routes from './routes';
 
-const Login = React.lazy(() => import('./../views/login'));
+const routeComponents = routes.map(({ path, exact, component }) => (
+  <Route exact={exact} path={path} component={component} />
+));
 
 const Routers: React.FC = () => (
   <HashRouter>
     <Suspense fallback={<Loading />}>
-      <Switch>
-        <Route exact path="/" component={Login} />
-        <Route path="/home" component={Home} />
-      </Switch>
+      <Switch>{routeComponents}</Switch>
     </Suspense>
   </HashRouter>
 );
