@@ -6,8 +6,8 @@ module.exports = {
   extends: [
     'plugin:react/recommended',
     'airbnb',
-    "prettier/@typescript-eslint",
-    "plugin:prettier/recommended"
+    'prettier/@typescript-eslint',
+    'plugin:prettier/recommended'
   ],
   globals: {
     Atomics: 'readonly',
@@ -27,35 +27,36 @@ module.exports = {
     'react-hooks'
   ],
   rules: {
-    "import/extensions": [
-      "error",
-      "ignorePackages",
+    'import/extensions': [
+      'error',
+      'ignorePackages',
       {
-        js: "never",
-        jsx: "never",
-        ts: "never",
-        tsx: "never",
+        js: 'never',
+        jsx: 'never',
+        ts: 'never',
+        tsx: 'never',
       },
     ],
 
-    "react/jsx-filename-extension": [
+    'react/jsx-filename-extension': [
       1,
-      { extensions: [".js", ".jsx", ".ts", ".tsx"] },
+      { extensions: ['.js', '.jsx', '.ts', '.tsx'] },
     ],
-    "react-hooks/rules-of-hooks": "error",
-    "react-hooks/exhaustive-deps": "warn",
-    "no-unused-vars": "off",
-    "camelcase": "off",
-    "@typescript-eslint/no-unused-vars": "error",
+    'react/jsx-one-expression-per-line': 'off',
+    'react-hooks/rules-of-hooks': 'error',
+    'react-hooks/exhaustive-deps': 'warn',
+    'no-unused-vars': 'off',
+    'camelcase': 'off',
+    '@typescript-eslint/no-unused-vars': 'error',
     '@typescript-eslint/camelcase': 'off',
   },
    settings: {
-    "react": {
-      version: "detect" // Tells eslint-plugin-react to automatically detect the version of React to use
+    'react': {
+      version: 'detect' // Tells eslint-plugin-react to automatically detect the version of React to use
     },
-    "import/resolver": {
+    'import/resolver': {
       node: {
-        extensions: [".js", ".jsx", ".ts", ".tsx"],
+        extensions: ['.js', '.jsx', '.ts', '.tsx'],
       },
     },
   },
