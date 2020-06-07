@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { RECEIVE_USER, UserAction } from './action';
+import { LOGIN_SUCCESS, UserAction } from './action';
 import { UserState } from '../types/global';
 import storageUtils from '../utils/storage';
 
@@ -13,7 +13,7 @@ const initialUser = (): UserState => {
 
 function user(state = initialUser(), action: UserAction): UserState {
   switch (action.type) {
-    case RECEIVE_USER:
+    case LOGIN_SUCCESS:
       return { ...state, ...action.payload };
     default:
       return state;

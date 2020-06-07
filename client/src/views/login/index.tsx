@@ -2,11 +2,7 @@ import React, { useState } from 'react';
 import { Form, Input, Button, Spin, message } from 'antd';
 import { UserOutlined, LockOutlined, LoadingOutlined } from '@ant-design/icons';
 import { useHistory } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import request from '../../utils/request';
-import storageUtils from '../../utils/storage';
 import './style.scss';
-import { receiveUser } from '../../store/action';
 
 const FormItem = Form.Item;
 
@@ -24,31 +20,13 @@ interface LoginResponseData {
 const Login: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
-  const dispatch = useDispatch();
   const history = useHistory();
 
-  const handleSubmit = async (values: LoginFormData) => {
-    try {
-      setLoading(true);
-      const result = (await request(
-        '/api/login',
-        values,
-        'POST'
-      )) as LoginResponseData;
-      if (result.code === '1') {
-        storageUtils.saveToken(result.token);
-        const user = storageUtils.getUser(result.token);
-        dispatch(receiveUser(user));
-        message.success(result.msg);
-        setLoading(false);
-        history.push('/home');
-      } else {
-        message.error(result.msg);
-        setLoading(false);
-      }
-    } catch (err) {
-      message.error(err.message);
-    }
+  const handleSubmit = (values: LoginFormData) => {
+    console.log(values);
+    setLoading(true);
+    message.success('saga missed...');
+    history.push('/home');
   };
 
   return (
