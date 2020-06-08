@@ -6,6 +6,14 @@ export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_FAILED = 'LOGIN_FAILED';
 export const RESET_USER = 'RESET_USER';
 
+interface LoginRequest {
+  type: typeof LOGIN_REQUEST;
+  authData: {
+    username: string;
+    password: string;
+  };
+}
+
 interface LoginSuccess {
   type: typeof LOGIN_SUCCESS;
   payload: UserState;
@@ -21,6 +29,17 @@ interface LogOut {
 }
 
 export type UserAction = LoginSuccess | LoginFailed | LogOut;
+
+export const loginRequest = (
+  username: string,
+  password: string
+): LoginRequest => ({
+  type: LOGIN_REQUEST,
+  authData: {
+    username,
+    password,
+  },
+});
 
 export const loginSuccess = (user: UserState): UserAction => ({
   type: LOGIN_SUCCESS,

@@ -1,7 +1,13 @@
 import request from '../utils/request';
+import { LoginResponseData } from '../types/global';
 
-function fetchLogin(username: string, password: string) {
-  request('/api/login', { username, password }, 'POST');
+async function fetchLogin(username: string, password: string) {
+  const result = (await request(
+    '/api/login',
+    { username, password },
+    'POST'
+  )) as LoginResponseData;
+  return result;
 }
 
 export default fetchLogin;
