@@ -1,32 +1,21 @@
-import React, { useState } from 'react';
-import { Form, Input, Button, Spin, message } from 'antd';
-import { UserOutlined, LockOutlined, LoadingOutlined } from '@ant-design/icons';
-import { useHistory } from 'react-router-dom';
+import React from 'react';
+import { Form, Input, Button } from 'antd';
+import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import './style.scss';
+import { loginRequest } from '../../store/action';
 
 const FormItem = Form.Item;
 
 interface LoginFormData {
-  username?: string;
-  password?: string;
-}
-
-interface LoginResponseData {
-  code: string;
-  token: string;
-  msg: string;
+  username: string;
+  password: string;
 }
 
 const Login: React.FC = () => {
-  const [loading, setLoading] = useState(false);
-  const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
-  const history = useHistory();
+  const [form] = Form.useForm();
 
-  const handleSubmit = (values: LoginFormData) => {
-    console.log(values);
-    setLoading(true);
-    message.success('saga missed...');
-    history.push('/home');
+  const handleSubmit = () => {
+    loginRequest(username, password);
   };
 
   return (
@@ -71,8 +60,7 @@ const Login: React.FC = () => {
             className="login-button"
             size="large"
           >
-            <Spin indicator={antIcon} spinning={loading} />
-            {loading ? ' Logging in' : ' Login'}
+            Login
           </Button>
         </FormItem>
       </Form>
