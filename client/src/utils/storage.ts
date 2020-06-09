@@ -30,6 +30,7 @@ export default {
   getUser(token: string): UserState {
     const decoded = JwtDecode<TokenDecode>(token);
     return {
+      isAuthencated: true,
       name: decoded.userinfo.Name,
       role: decoded.userinfo.Role,
     };
