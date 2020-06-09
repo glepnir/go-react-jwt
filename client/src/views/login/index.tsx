@@ -2,20 +2,26 @@ import React from 'react';
 import { Form, Input, Button } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import './style.scss';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { loginRequest } from '../../store/action';
+import { RootState } from '../../store/reducer';
 
 const FormItem = Form.Item;
 
-interface LoginFormData {
-  username: string;
-  password: string;
-}
-
 const Login: React.FC = () => {
-  const [form] = Form.useForm();
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const isAuthencated = useSelector(
+    (state: RootState) => state.user.isAuthencated
+  );
 
-  const handleSubmit = () => {
-    loginRequest(username, password);
+  const handleSubmit = (values: any) => {
+    const { username, password } = values;
+    dispatch(loginRequest(username, password));
+    if (isAuthencated) {
+      history.push('/home');
+    }
   };
 
   return (

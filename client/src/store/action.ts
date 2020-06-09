@@ -21,19 +21,18 @@ interface LoginSuccess {
 
 interface LoginFailed {
   type: typeof LOGIN_FAILED;
-  payload: string;
 }
 
 interface LogOut {
   type: typeof RESET_USER;
 }
 
-export type UserAction = LoginSuccess | LoginFailed | LogOut;
+export type UserAction = LoginRequest | LoginSuccess | LoginFailed | LogOut;
 
 export const loginRequest = (
   username: string,
   password: string
-): LoginRequest => ({
+): UserAction => ({
   type: LOGIN_REQUEST,
   authData: {
     username,
@@ -46,12 +45,10 @@ export const loginSuccess = (user: UserState): UserAction => ({
   payload: user,
 });
 
-export const loginFailed = (error: string): UserAction => ({
+export const loginFailed = (): UserAction => ({
   type: LOGIN_FAILED,
-  payload: error,
 });
 
 export const logout = () => {
-  storageUtils.removeToken();
   return { type: RESET_USER };
 };

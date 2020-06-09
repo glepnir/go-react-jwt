@@ -1,4 +1,5 @@
 export interface UserState {
+  isAuthencated: boolean;
   name?: string;
   role?: string;
 }

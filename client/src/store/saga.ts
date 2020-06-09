@@ -1,35 +1,51 @@
-import { all, takeLatest, call, put } from 'redux-saga/effects';
-import { useHistory } from 'react-router-dom';
+import { fork, all, take, call, put, cancel } from 'redux-saga/effects';
 import { message } from 'antd';
 import fetchLogin from '../services/login';
 import storageUtils from '../utils/storage';
 import { LoginResponseData } from '../types/global';
-import { loginSuccess, loginFailed, LOGIN_REQUEST } from './action';
+import {
+  loginFailed,
+  loginSuccess,
+  LOGIN_REQUEST,
+  LOGIN_SUCCESS,
+  LOGIN_FAILED,
+} from './action';
 
 function* LoginRequestSaga(username: string, password: string) {
   try {
-    const history = useHistory();
     const result: LoginResponseData = yield call(
       fetchLogin,
       username,
       password
     );
     if (result.code === '1') {
-      message.success(result.msg);
       storageUtils.saveToken(result.token);
+      message.success(result.msg);
       const user = storageUtils.getUser(result.token);
       yield put(loginSuccess(user));
-      yield history.push('/home');
     } else {
-      yield put(loginFailed(result.msg));
+      message.error(result.msg);
+      yield put(loginFailed());
     }
   } catch (err) {
-    yield put(loginFailed(err));
+    message.error(err);
+    yield put(loginFailed());
   }
 }
 
 function* watchLogin() {
-  yield takeLatest(LOGIN_REQUEST, LoginRequestSaga);
+  while (true) {
+    const { authData } = yield take(LOGIN_REQUEST);
+    const task = yield fork(
+      LoginRequestSaga,
+      authData.username,
+      authData.password
+    );
+    const action = yield take([LOGIN_SUCCESS, LOGIN_FAILED]);
+    if (action.type === LOGIN_SUCCESS) {
+      yield cancel(task);
+    }
+  }
 }
 
 export default function* rootSaga() {
