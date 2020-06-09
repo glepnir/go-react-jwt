@@ -1,4 +1,3 @@
-import storageUtils from '../utils/storage';
 import { UserState } from '../types/global';
 
 export const LOGIN_REQUEST = 'LOGIN_REQUEST';
