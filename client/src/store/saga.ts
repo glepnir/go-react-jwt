@@ -1,8 +1,9 @@
 import { fork, all, take, call, put, cancel } from 'redux-saga/effects';
 import { message } from 'antd';
 import fetchLogin from '../services/login';
-import storageUtils from '../utils/storage';
-import { LoginResponseData } from '../types/global';
+import TokenStorage from '../utils/storage';
+import ILoginResponseData from '../models/login';
+import UserModel from '../models/user';
 import {
   loginFailed,
   loginSuccess,
@@ -13,15 +14,15 @@ import {
 
 function* LoginRequestSaga(username: string, password: string) {
   try {
-    const result: LoginResponseData = yield call(
+    const result: ILoginResponseData = yield call(
       fetchLogin,
       username,
       password
     );
     if (result.code === '1') {
-      storageUtils.saveToken(result.token);
+      TokenStorage.storeToken(result.token);
       message.success(result.msg);
-      const user = storageUtils.getUser(result.token);
+      const user = UserModel.getUser(result.token);
       yield put(loginSuccess(user));
     } else {
       message.error(result.msg);
