@@ -1,14 +1,14 @@
 import { combineReducers } from 'redux';
 import { LOGIN_SUCCESS, UserAction, LOGIN_FAILED } from './action';
-import { UserState } from '../types/global';
-import storageUtils from '../utils/storage';
+import UserModel, { UserState } from '../models/user';
+import TokenStorage from '../utils/storage';
 
 const initialUser = (): UserState => {
-  const token = storageUtils.getToken();
-  if (token === undefined) {
+  const token = TokenStorage.getToken();
+  if (token === null) {
     return { isAuthencated: false };
   }
-  return storageUtils.getUser(token);
+  return UserModel.getUser(token);
 };
 
 function user(state = initialUser(), action: UserAction): UserState {
@@ -16,7 +16,7 @@ function user(state = initialUser(), action: UserAction): UserState {
     case LOGIN_SUCCESS:
       return { ...state, ...action.payload };
     case LOGIN_FAILED:
-      storageUtils.removeToken();
+      TokenStorage.clear();
       return { isAuthencated: false };
     default:
       return state;

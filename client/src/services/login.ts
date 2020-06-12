@@ -1,12 +1,12 @@
 import request from '../utils/request';
-import { LoginResponseData } from '../types/global';
+import ILoginResponseData from '../models/login';
 
 async function fetchLogin(username: string, password: string) {
   const result = (await request(
     '/api/login',
     { username, password },
     'POST'
-  )) as LoginResponseData;
+  )) as ILoginResponseData;
   return result;
 }
 
