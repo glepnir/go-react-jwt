@@ -10,17 +10,17 @@ interface TokenDecode {
 }
 
 export interface UserState {
-  isAuthencated: boolean;
+  isAuthenticated: boolean;
   name?: string;
   role?: string;
 }
 
-// Get UserInfomation
+// Get UserInformation
 export default {
   getUser(token: string): UserState {
     const decoded = JwtDecode<TokenDecode>(token);
     return {
-      isAuthencated: true,
+      isAuthenticated: true,
       name: decoded.userinfo.Name,
       role: decoded.userinfo.Role,
     };

@@ -14,15 +14,15 @@ const Login: React.FC = () => {
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
   const dispatch = useDispatch();
   const history = useHistory();
-  const isAuthencated = useSelector(
-    (state: RootState) => state.user.isAuthencated
+  const isAuthenticated = useSelector(
+    (state: RootState) => state.user.isAuthenticated
   );
 
   const handleSubmit = (values: any) => {
     setLoading(true);
     const { username, password } = values;
     dispatch(loginRequest(username, password));
-    if (isAuthencated) {
+    if (isAuthenticated) {
       history.push('/home');
     }
   };

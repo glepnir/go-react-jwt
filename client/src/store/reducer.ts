@@ -6,7 +6,7 @@ import { LOGIN_SUCCESS, UserAction, LOGIN_FAILED } from './action';
 const initialUser = (): UserState => {
   const token = TokenStorage.getToken();
   if (token === null) {
-    return { isAuthencated: false };
+    return { isAuthenticated: false };
   }
   return UserModel.getUser(token);
 };
@@ -17,7 +17,7 @@ function user(state = initialUser(), action: UserAction): UserState {
       return { ...state, ...action.payload };
     case LOGIN_FAILED:
       TokenStorage.clear();
-      return { isAuthencated: false };
+      return { isAuthenticated: false };
     default:
       return state;
   }
