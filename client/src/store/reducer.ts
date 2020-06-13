@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
+import TokenStorage from '@utils/storage';
+import UserModel, { UserState } from '@models/user';
 import { LOGIN_SUCCESS, UserAction, LOGIN_FAILED } from './action';
-import UserModel, { UserState } from '../models/user';
-import TokenStorage from '../utils/storage';
 
 const initialUser = (): UserState => {
   const token = TokenStorage.getToken();

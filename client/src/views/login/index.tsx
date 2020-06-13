@@ -4,8 +4,8 @@ import { UserOutlined, LockOutlined, LoadingOutlined } from '@ant-design/icons';
 import './style.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { loginRequest } from '../../store/action';
-import { RootState } from '../../store/reducer';
+import { RootState } from '@store/reducer';
+import { loginRequest } from '@store/action';
 
 const FormItem = Form.Item;
 

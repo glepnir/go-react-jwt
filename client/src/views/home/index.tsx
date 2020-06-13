@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { RootState } from '../../store/reducer';
+import { RootState } from '@store/reducer';
 
 const Home: React.FC = () => {
   const currentuser = useSelector((state: RootState) => state.user);

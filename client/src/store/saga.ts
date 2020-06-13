@@ -1,9 +1,9 @@
 import { fork, all, take, call, put, cancel } from 'redux-saga/effects';
 import { message } from 'antd';
-import fetchLogin from '../services/login';
-import TokenStorage from '../utils/storage';
-import ILoginResponseData from '../models/login';
-import UserModel from '../models/user';
+import fetchLogin from '@services/login';
+import TokenStorage from '@utils/storage';
+import ILoginResponseData from '@models/login';
+import UserModel from '@models/user';
 import {
   loginFailed,
   loginSuccess,

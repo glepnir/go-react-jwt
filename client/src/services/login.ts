@@ -1,5 +1,5 @@
-import request from '../utils/request';
-import ILoginResponseData from '../models/login';
+import request from '@utils/request';
+import ILoginResponseData from '@models/login';
 
 async function fetchLogin(username: string, password: string) {
   const result = (await request(
