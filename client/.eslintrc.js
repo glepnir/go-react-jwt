@@ -27,6 +27,7 @@ module.exports = {
     'react-hooks'
   ],
   rules: {
+    'import/no-unresolved': 'off',
     'import/extensions': [
       'error',
       'ignorePackages',
@@ -56,7 +57,6 @@ module.exports = {
     },
     'import/resolver': {
       node: {
-        paths: ["src"],
         extensions: ['.js', '.jsx', '.ts', '.tsx'],
       },
     },
