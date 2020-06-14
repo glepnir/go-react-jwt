@@ -53,13 +53,17 @@ func main() {
 		}
 	}()
 	log.Println("Server started")
-	quit := make(chan os.Signal, 1)
-	signal.Notify(quit, syscall.SIGINT, syscall.SIGTERM)
-	<-quit
-	log.Println("Recived shutdown signal,Server will closed")
+	shutdown(srv)
+}
+
+func shutdown(s *http.Server) {
+	quiet := make(chan os.Signal, 1)
+	signal.Notify(quiet, syscall.SIGINT, syscall.SIGTERM)
+	<-quiet
+	log.Println("Received shutdown signal,Server will closed")
 	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
 	defer cancel()
-	if err := srv.Shutdown(ctx); err != nil {
+	if err := s.Shutdown(ctx); err != nil {
 		log.Fatalf("Server shutdown error:%s", err)
 	}
 	log.Println("Server exiting")
