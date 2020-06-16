@@ -4,6 +4,7 @@ import fetchLogin from '@services/login';
 import TokenStorage from '@utils/storage';
 import ILoginResponseData from '@models/login';
 import UserModel from '@models/user';
+import { push } from 'connected-react-router';
 import {
   loginFailed,
   loginSuccess,
@@ -24,6 +25,7 @@ function* LoginRequestSaga(username: string, password: string) {
       message.success(result.msg);
       const user = UserModel.getUser(result.token);
       yield put(loginSuccess(user));
+      yield put(push('/home'));
     } else {
       message.error(result.msg);
       yield put(loginFailed());

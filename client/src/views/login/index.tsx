@@ -2,9 +2,7 @@ import React, { useState } from 'react';
 import { Form, Input, Button, Spin } from 'antd';
 import { UserOutlined, LockOutlined, LoadingOutlined } from '@ant-design/icons';
 import './style.scss';
-import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
-import { RootState } from '@store/reducer';
+import { useDispatch } from 'react-redux';
 import { loginRequest } from '@store/action';
 
 const FormItem = Form.Item;
@@ -13,18 +11,11 @@ const Login: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
   const dispatch = useDispatch();
-  const history = useHistory();
-  const isAuthenticated = useSelector(
-    (state: RootState) => state.user.isAuthenticated
-  );
 
   const handleSubmit = (values: any) => {
     setLoading(true);
     const { username, password } = values;
     dispatch(loginRequest(username, password));
-    if (isAuthenticated) {
-      history.push('/home');
-    }
   };
 
   return (

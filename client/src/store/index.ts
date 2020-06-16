@@ -1,6 +1,8 @@
 import { createStore, compose, applyMiddleware } from 'redux';
 import createSagaMiddleware from 'redux-saga';
-import { rootReducer } from './reducer';
+import { routerMiddleware } from 'connected-react-router';
+import { History } from 'history';
+import { createRootReducer } from './reducer';
 import rootSaga from './saga';
 
 interface ExtendedWindow extends Window {
@@ -9,17 +11,18 @@ interface ExtendedWindow extends Window {
 
 declare let window: ExtendedWindow;
 
-const sagaMiddleware = createSagaMiddleware();
+export default function configureStore(history: History) {
+  const sagaMiddleware = createSagaMiddleware();
+  const composeEnhancers =
+    (typeof window === 'object' &&
+      window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) ||
+    compose;
 
-const composeEnhancers =
-  (typeof window === 'object' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) ||
-  compose;
+  const store = createStore(
+    createRootReducer(history),
+    composeEnhancers(applyMiddleware(sagaMiddleware, routerMiddleware(history)))
+  );
 
-const store = createStore(
-  rootReducer,
-  composeEnhancers(applyMiddleware(sagaMiddleware))
-);
-
-sagaMiddleware.run(rootSaga);
-
-export default store;
+  sagaMiddleware.run(rootSaga);
+  return store;
+}
