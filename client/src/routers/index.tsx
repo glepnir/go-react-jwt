@@ -1,6 +1,7 @@
 import React, { Suspense } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import Loading from '@components/Loading';
+import ErrorBoundary from '@components/ErrorBoundary';
 import routes from './routes';
 
 const renderRoutes = routes.map(({ path, exact, component, key }) => (
@@ -8,9 +9,11 @@ const renderRoutes = routes.map(({ path, exact, component, key }) => (
 ));
 
 const Routers: React.FC = () => (
-  <Suspense fallback={<Loading />}>
-    <Switch>{renderRoutes}</Switch>
-  </Suspense>
+  <ErrorBoundary>
+    <Suspense fallback={<Loading />}>
+      <Switch>{renderRoutes}</Switch>
+    </Suspense>
+  </ErrorBoundary>
 );
 
 export default Routers;

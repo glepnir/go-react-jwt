@@ -43,6 +43,12 @@ module.exports = {
       1,
       { extensions: ['.js', '.jsx', '.ts', '.tsx'] },
     ],
+    "react/jsx-wrap-multilines": ["error", {
+          "declaration": true,
+          "assignment": true,
+          "return": true,
+          "arrow": true
+      }],
     'react/jsx-one-expression-per-line': 'off',
     'react-hooks/rules-of-hooks': 'error',
     'react-hooks/exhaustive-deps': 'warn',
