@@ -3,8 +3,8 @@ import { useSelector } from 'react-redux';
 import { RootState } from '@store/reducer';
 
 const Home: React.FC = () => {
-  const currentuser = useSelector((state: RootState) => state.user);
-  return <div>Current User:{currentuser.name}</div>;
+  const user = useSelector((state: RootState) => state.user);
+  return <div>Current User:{user.name}</div>;
 };
 
 export default Home;

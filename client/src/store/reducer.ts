@@ -1,8 +1,6 @@
 import { combineReducers } from 'redux';
 import TokenStorage from '@utils/storage';
 import UserModel, { UserState } from '@models/user';
-import { connectRouter } from 'connected-react-router';
-import { History } from 'history';
 import { LOGIN_SUCCESS, UserAction, LOGIN_FAILED } from './action';
 
 const initialUser = (): UserState => {
@@ -25,10 +23,8 @@ function user(state = initialUser(), action: UserAction): UserState {
   }
 }
 
-export const createRootReducer = (history: History) =>
-  combineReducers({
-    router: connectRouter(history),
-    user,
-  });
+export const rootReducer = combineReducers({
+  user,
+});
 
-export type RootState = ReturnType<typeof createRootReducer>;
+export type RootState = ReturnType<typeof rootReducer>;
