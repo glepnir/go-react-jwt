@@ -1,6 +1,8 @@
 import { combineReducers } from 'redux';
 import TokenStorage from '@utils/storage';
 import UserModel, { UserState } from '@models/user';
+import { connectRouter } from 'connected-react-router';
+import history from '@utils/history';
 import { LOGIN_SUCCESS, UserAction, LOGIN_FAILED } from './action';
 
 const initialUser = (): UserState => {
@@ -23,7 +25,10 @@ function user(state = initialUser(), action: UserAction): UserState {
   }
 }
 
+const router = connectRouter(history);
+
 export const rootReducer = combineReducers({
+  router,
   user,
 });
 

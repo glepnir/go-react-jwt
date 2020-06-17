@@ -1,5 +1,7 @@
 import { createStore, compose, applyMiddleware } from 'redux';
 import createSagaMiddleware from 'redux-saga';
+import { routerMiddleware } from 'connected-react-router';
+import history from '@utils/history';
 import { rootReducer } from './reducer';
 import rootSaga from './saga';
 
@@ -16,7 +18,7 @@ const composeEnhancers =
 
 const store = createStore(
   rootReducer,
-  composeEnhancers(applyMiddleware(sagaMiddleware))
+  composeEnhancers(applyMiddleware(sagaMiddleware, routerMiddleware(history)))
 );
 
 sagaMiddleware.run(rootSaga);
