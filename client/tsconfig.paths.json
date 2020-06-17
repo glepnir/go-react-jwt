@@ -3,6 +3,7 @@
     "baseUrl": ".",
     "paths": {
       "@store/*": ["src/store/*"],
+      "@layout/*": ["src/layout/*"],
       "@views/*": ["src/views/*"],
       "@services/*": ["src/services/*"],
       "@routers/*": ["src/routers/*"],

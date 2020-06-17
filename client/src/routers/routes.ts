@@ -1,8 +1,9 @@
 import { lazy } from 'react';
 
-const [Login, Home, NotFound] = [
+const [Login, Home, BasicLayout, NotFound] = [
   () => import('@views/login'),
   () => import('@views/home'),
+  () => import('@layout/BasicLayout'),
   () => import('@views/error/404'),
 ].map((item) => {
   return lazy(item);
@@ -18,9 +19,10 @@ const routes = [
   {
     path: '/home',
     key: 'home',
-    component: Home,
+    component: BasicLayout,
   },
   {
+    key: 'NotFound',
     component: NotFound,
   },
 ];
