@@ -1,18 +1,19 @@
 import React from 'react';
 import { Layout } from 'antd';
-import Header from '@components/Header';
-import Footer from '@components/Footer';
+import LayoutHeader from '@components/LayoutHeader';
+import LayoutFooter from '@components/LayoutFooter';
+import LayoutSider from '@components/LayoutSider';
 import './style.scss';
 
-const { Sider, Content } = Layout;
+const { Content } = Layout;
 const BasicLayout: React.FC = () => {
   return (
     <Layout className="page-basic">
-      <Sider> Sider </Sider>
+      <LayoutSider> LayoutSider </LayoutSider>
       <Layout>
-        <Header />
+        <LayoutHeader />
         <Content />
-        <Footer />
+        <LayoutFooter />
       </Layout>
     </Layout>
   );
